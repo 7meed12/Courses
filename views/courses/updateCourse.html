@@ -1,0 +1,47 @@
+<form ng-submit="updateCourse(course.id,course.name,course.description,course.maxPoints)">
+  <div class="container mt-4 d-flex justify-content-center">
+    <div class="row ">
+      <div class="input-group mb-3 w-75">
+      <span class="input-group-text border-0" id="Name">Name</span>
+     <input
+      type="text"
+      class="form-control rounded"
+      placeholder="Name"
+      aria-label="Name"
+      aria-describedby="Name"
+      ng-model="course.name"
+     />
+    </div>
+    <div class="row">
+      <div class="input-group mb-3 w-75">
+      <span class="input-group-text border-0" id="description">Description</span>
+      <input
+        type="text"
+        class="form-control rounded"
+        placeholder="description"
+        aria-label="description"
+        aria-describedby="description"
+        ng-model="course.description"
+      />
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="input-group mb-3 w-25">
+      <span class="input-group-text border-0" id="points">Max Points</i></span>
+      <input
+        type="number"
+        class="form-control rounded"
+        placeholder="Max Points"
+        aria-label="Max Points"
+        aria-describedby="points"
+        ng-model="course.maxPoints"
+      />
+    </div>
+    </div>
+ <div class="row justify-content-center ">
+   <button type="submit" class="btn btn-primary " style="width: 100px;">Submit</button>
+ </div>
+  
+</div>
+</form>

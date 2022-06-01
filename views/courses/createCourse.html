@@ -1,0 +1,46 @@
+<form ng-submit="createCourse(name,description,maxPoints)">
+
+  <div class="container mt-4 d-flex justify-content-center">
+    <div class="row ">
+      <div class="input-group mb-3 w-75">
+      <span class="input-group-text border-0" id="Name"><i class="fas fa-pen"></i></span>
+     <input
+      type="text"
+      class="form-control rounded"
+      placeholder="Name"
+      aria-label="Name"
+      aria-describedby="Name"
+      ng-model="name"
+     />
+    </div>
+    <div class="row">
+      <div class="input-group mb-3 w-75">
+      <span class="input-group-text border-0" id="description"><i class="fas fa-book"></i></span>
+      <input
+        type="text"
+        class="form-control rounded"
+        placeholder="description"
+        aria-label="description"
+        aria-describedby="description"
+        ng-model="description"
+      />
+    </div>
+    <div class="row">
+      <div class="input-group mb-3 w-25">
+      <span class="input-group-text border-0" id="points"><i class="fas fa-mars"></i></span>
+      <input
+        type="number"
+        class="form-control rounded"
+        placeholder="Max Points"
+        aria-label="Max Points"
+        aria-describedby="points"
+        ng-model="maxPoints"
+      />
+    </div>
+        
+ <div class="row justify-content-center ">
+   <button type="submit" class="btn btn-primary " style="width: 100px; border-radius: 25%;">Submit</button>
+ </div>
+  
+</div>
+</form>

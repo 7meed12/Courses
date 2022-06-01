@@ -1,0 +1,24 @@
+<button class="btn btn-warning"><a href="category/create">Add new category</a></button>
+<div class="card-group">
+  <div class="row">
+    <div class="col-lg-4 col-md-6 mt-4" ng-repeat="category in res">
+      <div class="card">
+        <img
+          src="../../public/img/become_a_student_inline.jpg"
+          class="card-img-top"
+        />
+        <div class="card-body">
+          <h3 class="card-title mb-3">{{category.name}}</h3>
+        <div class="row d-flex justify-content-center pb-2 mt-3">
+          <div class="col-4">
+              <a ng-click="update(category)"
+              class="btn btn-warning w-50">Edit</a>
+          </div>
+          <div class="col-4">
+            <a href="#" class="btn btn-danger" ng-click="deleteCategory(category.id)">Delete</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
