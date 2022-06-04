@@ -20,23 +20,15 @@ exports.registerUser = (req, res)=> {
 
 }
 
-exports.loginUser = (req, res)=> {
-    console.log('hi')
+exports.loginUser = (req, res , next)=> {
     User.findOne({where:{username : req.body.username}})
         .then(user => {
-            if(!user) return res.json({message : 'inavlid Inputs'});
+            if(!user) return res.send({message : 'inavlid Inputs'});
             const valid = utils.validPassword(req.body.password, user.hash, user.salt);
-            if(!valid) return res.json({message : 'Invalid password'});
+            if(!valid) return res.send({message : 'Invalid password'});
             const jwt = utils.issueJWT(user);
-            res.cookie('jwt', jwt.token, {
-                maxAge:  1000000
-                
-            });
-            
-            res.json({user : user , token : jwt.token , expiresIn : jwt.expiresIn});
-    
-        }) 
-        console.log('logged')
+            return res.send({user : user.username , token : jwt.token , expiresIn : jwt.expiresIn});
+        }). catch(err => res.send({message : 'Invalid Inputs'}));
 
 }
 exports.logoutUser = (req, res)=> {
@@ -80,5 +72,26 @@ exports.cancelCourse=(req, res)=> {
     } catch(err) {
         return res.status(401).json({message : 'Unauthorized'});
     }
+}
+
+exports.checkUser=(req,res, next)=>{
+    const token = req.body.token;
+    if(token){
+        jwt.verify(token, key.secretOrKey, (err, decoded) =>{ 
+            if(err){
+                res.message = 'Invalid token';
+                    next();
+                }
+            else {
+               User.findOne({where:{id : decoded.sub}})
+                .then(user => {
+                    res.send({username : user.username});
+                })
+
+            }  
+        })
+    }else { 
+        res.message='Invalid token';
+        next()}
 }
 

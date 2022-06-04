@@ -4,6 +4,8 @@ course.factory('getCategories', ($http)=> {
      return $http.get('http://localhost:5000/category/')
 })
 
+
+
 course.config( function ($routeProvider,$locationProvider) {
     $locationProvider.html5Mode({
         enabled: true,
@@ -33,8 +35,9 @@ course.config( function ($routeProvider,$locationProvider) {
 }
 )
 
-course.controller('courseController', function($scope,$http,$location,$route,getCategories) {
+course.controller('courseController', function($scope,$http,$location,$route,getCategories ) {
     getCategories.then(function(res){ $scope.categories = res.data; });
+    $scope.loggedUser='aa';
 
     $http.get('http://localhost:5000/course/').then(function(res) {
         $scope.All = res.data;
@@ -62,7 +65,7 @@ course.controller('courseController', function($scope,$http,$location,$route,get
 
 
 
-    $scope.createCourse = function (name,description,maxPoints,cats){
+    $scope.createCourse = function (name,description,maxPoints){
         $http.post('http://localhost:5000/course/create',{name:name,description:description,maxPoints:maxPoints}).then(function(res) {
         $scope.course = res.data; 
         $location.path('/');
@@ -144,16 +147,18 @@ course.controller('categoryController', function($scope,$http,$location,$route,g
     $scope.init();
 })
 
-course.controller('userController', function($scope,$http,$location,$route) {
+course.controller('userController', function($scope,$http,$location) {
     $scope.registerUser=(username , password)=>{
         $http.post('http://localhost:5000/user/register',{username:username,password:password}).then(function(res) {
             $location.path('/');
         });
     }
-    $scope.loginUser=(username , password)=>{
-        console.log(username,password)
+    $scope.loginUser=(username,password)=>{
         $http.post('http://localhost:5000/user/login',{username:username,password:password}).then(function(res) {
-            $location.path('/');
+            localStorage.setItem('token',res.data.token); 
+            $location.path('/');   
         });
     }
+    
+   
 })
