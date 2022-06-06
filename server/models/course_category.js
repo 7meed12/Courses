@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+
 const sequelize = require('../config/db');
 const Course = require('./course');
 const Category = require('./category');

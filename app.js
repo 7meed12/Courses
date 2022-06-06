@@ -1,16 +1,17 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
+
 //db connection
 const sequelize = require('./server/config/db');
 const Course = require('./server/models/course');
 const Category = require('./server/models/category');
 const User = require('./server/models/user');
 const courseCategory = require('./server/models/course_category');
-//jwt auth 
-const passport = require('passport');
-require('./server/config/passport')(passport);
-app.use(passport.initialize());
+const userCourse = require('./server/models/user_course');
+
+
 
 //routes
 const courseRoute = require('./server/route/course');
@@ -30,4 +31,4 @@ const port = process.env.PORT || 5000;
 
 
 
- //sequelize.sync({force: false})
+ //sequelize.sync({force: true})

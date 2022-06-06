@@ -1,4 +1,3 @@
-
 const Course = require('../models/course');
 const Category = require('../models/category');
 const course_category= require('../models/course_category');
@@ -65,7 +64,7 @@ exports.addCourseCategoryJunction=(req, res) => {
         categoryId: req.body.categoryId
     }).then(course_category => {
         res.send(course_category);
-    })
+    }).catch(err => { "already exists" });
     
 }
 

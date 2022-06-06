@@ -1,30 +1,39 @@
-<section class="vh-100" style="background-color:#508bfc;">
-    <form ng-submit="registerUser(username,password)">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-              <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div class="card " style="border-radius: 1rem;">
-                  <div class="card-body p-5 text-center">
-        
-                    <h3 class="mb-5">Register</h3>
-        
-                    <div class="form-outline mb-4" style="border: red;">
-                      <input type="text" id="typeEmailX-2" class="form-control" ng-model="username" />
-                      <label class="form-label" for="typeEmailX-2">Username</label>
+
+<section class="vh-100" style="background-color: #508bfc;">
+  <form ng-submit="registerUser(username,password)">
+      <div class="container">
+          <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+              <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-4 p-sm-5">
+                  <h5 class="card-title text-center mb-5 fw-light fs-5">Regsiter</h5>
+                  <form>
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="floatingInput" ng-model="username" placeholder="Username">
+                      <label for="floatingInput">Username</label>
                     </div>
-        
-                    <div class="form-outline mb-4">
-                      <input type="password" id="typePasswordX-2" class="form-control form-control-lg" ng-model="password"/>
-                      <label class="form-label" for="typePasswordX-2">Password</label>
+                    <div class="form-floating mb-3">
+                      <input type="password" class="form-control" id="floatingPassword" placeholder="Password" ng-model="password">
+                      <label for="floatingPassword">Password</label>
                     </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
-        
-              
-        
-                  </div>
+                    <h1>{{res.message}}</h1>
+                    
+                    <div class="d-grid">
+                      <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Register
+                      </button>
+                    </div>
+                    
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-    </form>
-  </section>
+        </div>
+
+  </form>
+  
+</section>
+
+
+

@@ -4,15 +4,12 @@ course.factory('getCategories', ($http)=> {
      return $http.get('http://localhost:5000/category/')
 })
 
-
-
 course.config( function ($routeProvider,$locationProvider) {
     $locationProvider.html5Mode({
         enabled: true,
     }) 
+   
     $routeProvider
-
-
    //courses routes 
     .when('/', { templateUrl: './courses/courses.html' , controller:'courseController'})
     .when('/course', { templateUrl: './courses/courses.html' , controller:'courseController'})
@@ -22,14 +19,13 @@ course.config( function ($routeProvider,$locationProvider) {
     //catgeories routes
     .when('/category/', { templateUrl: './categories/categories.html' , controller:'categoryController'})
     .when('/category/create', { templateUrl: './categories/createCategory.html' , controller:'categoryController'})
+    .when('/category/:id', { templateUrl: './categories/categoryCourses.html', controller:'categoryController'})
     .when('/category/update/:id', { templateUrl: './categories/updateCategory.html', controller:'categoryController'})
 
-
-
     //users routes
+    .when('/user/list', { templateUrl: './user/users.html' , controller:'userController'})
     .when('/user/login', { templateUrl: './user/login.html' , controller:'userController'})
     .when('/user/register', { templateUrl: './user/register.html' , controller:'userController'})
-    
     .otherwise({ redirectTo: '/' });
 
 }
@@ -49,15 +45,16 @@ course.controller('courseController', function($scope,$http,$location,$route,get
         $scope.course = res.data; 
     });}
 
-    $scope.filteredCourses=[]
+   
     $scope.filterCondition=function(query){
+        $scope.filteredCourses=[]
         $scope.courses = $scope.All;
         if(query=="-"){
             $scope.courses=$scope.All;
         }else {
             angular.forEach($scope.courses, (course)=>{
                 course.categories.forEach(
-                    function(category){ if(category.name==query) $scope.filteredCourses.push(course); })});
+                    (category)=>{ if(category.name==query) $scope.filteredCourses.push(course); })});
                 $scope.result =[...$scope.filteredCourses.reduce((map,obj)=> map.set(obj.id,obj), new Map()).values()];
                 $scope.courses = $scope.result;
         }}
@@ -73,7 +70,7 @@ course.controller('courseController', function($scope,$http,$location,$route,get
 
 }
     $scope.update=function(course){
-        $scope.course =course
+        $scope.course=course
         $location.path('/update/'+course.id)
         
     }
@@ -87,11 +84,6 @@ course.controller('courseController', function($scope,$http,$location,$route,get
     $scope.deleteCourse = function (id){
         $http.delete('http://localhost:5000/course/delete/'+id).then(function(res) {
         });}
-
-        $scope.data = {};
-           $scope.forceUnknownOption = function() {
-             $scope.data.singleSelect = 'nonsense';
-           };
 
 
         
@@ -108,12 +100,17 @@ course.controller('categoryController', function($scope,$http,$location,$route,g
    getCategories.then(function(res){ $scope.res = res.data; });
 
    
-    $scope.getCategoryById = function (id){
+   var getCategoryById = function (id){
         $http.get('http://localhost:5000/category/'+id).then(function(res) {
         $scope.category = res.data; 
+        $scope.courses = res.data.courses;
         
     });}
 
+    $scope.browseCategory = function (id){
+        $location.path('/category/'+id);
+    }
+    
     $scope.createCategory = function (name){
         $http.post('http://localhost:5000/category/create',{name:name}).then(function(res) {
         $scope.category = res.data; 
@@ -138,27 +135,39 @@ course.controller('categoryController', function($scope,$http,$location,$route,g
          
         });
         }
-
+        
     $scope.init=function(){
         if($route.current.params.id){
-            $scope.getCategoryById($route.current.params.id)
+            getCategoryById($route.current.params.id)
         }
     }
     $scope.init();
 })
 
 course.controller('userController', function($scope,$http,$location) {
+    $http.get('http://localhost:5000/user/users').then(function(res) {
+        $scope.users = res.data; 
+    })
     $scope.registerUser=(username , password)=>{
         $http.post('http://localhost:5000/user/register',{username:username,password:password}).then(function(res) {
             $location.path('/');
         });
     }
+   
     $scope.loginUser=(username,password)=>{
         $http.post('http://localhost:5000/user/login',{username:username,password:password}).then(function(res) {
-            localStorage.setItem('token',res.data.token); 
-            $location.path('/');   
+            localStorage.setItem('token',res.data.token);
+            $location.path('/');  
         });
     }
-    
+
+
+    $scope.disableUser=(id , status)=>{
+        $http.post('http://localhost:5000/user/disable',{id:id,status:status})
+    }
+        
+    $scope.deleteUser=(id)=>{
+        $http.post('http://localhost:5000/user/delete/',{id:id})
+    }
    
 })

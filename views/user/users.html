@@ -1,0 +1,28 @@
+<div class="container mt-2">
+    <table class="table table-bordered table-hover text-center ">
+    <tr>
+        <th>
+          Username
+        </th>
+        <th>
+           Admin
+        </th>
+        <th>
+         Disable
+        </th>
+        <th>
+            Buttons
+           </th>
+    </tr>
+ 
+        <tr ng-repeat="user in users">
+            <td>{{user.username}}</td>
+            <td><input type="checkbox" name="Admin" ng-checked="user.isAdmin"></select></td>
+            <td><input type="checkbox" name="Disable" ng-checked="user.isDisabled" ng-model="status" ng-change="disableUser(user.id,status)"></select></td>
+            <td class="justify-content-center">
+                <a class="btn btn-danger" ng-click="deleteUser(user.id)" > Delete</a>
+            </td>
+        </tr>
+  
+</table>
+</div>

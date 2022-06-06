@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./user');
+
 const Course = sequelize.define('course', {
     id:{
         type: Sequelize.INTEGER,
@@ -20,5 +20,5 @@ const Course = sequelize.define('course', {
         allowNull: true
     }
 })
-Course.hasMany(User);
+
 module.exports = Course;

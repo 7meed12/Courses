@@ -15,5 +15,5 @@ const Category = sequelize.define('category', {
     }
 
 })
-Category.belongsToMany(Course, {through: 'course_category'});
+
 module.exports = Category;
